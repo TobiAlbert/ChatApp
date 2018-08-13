@@ -9,7 +9,7 @@
     </style>
 
     <style name="AppTextStyle" parent="">
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 

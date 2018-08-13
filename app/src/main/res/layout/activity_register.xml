@@ -4,10 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.auth.RegisterActivity">
+    tools:context=".ui.auth.register.RegisterActivity">
 
+    <include layout="@layout/app_bar_layout"
+        android:id="@+id/register_toolbar"/>
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:id="@+id/new_account_tv"
+        android:layout_below="@id/register_toolbar"
+        android:text="Create a New Account"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        style="@style/AppTextStyle"/>
 
     <LinearLayout
+        android:layout_below="@id/new_account_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
