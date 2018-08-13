@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.start.StartActivity">
+
+    <TextView
+        android:id="@+id/start_tv"
+        style="@style/AppTextStyle"
+        android:layout_centerInParent="true"
+        android:text="Welcome to ChatApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/start_register_btn"
+        android:layout_below="@+id/start_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create A New Account"
+        android:layout_centerHorizontal="true"
+        style="@style/Base.Widget.AppCompat.Button.Colored"/>
+
+</RelativeLayout>
+
