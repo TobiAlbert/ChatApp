@@ -2,12 +2,15 @@ package com.tobidaada.chatapp.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.TabLayout
+import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.tobidaada.chatapp.R
+import com.tobidaada.chatapp.adapters.MainViewPagerAdapter
 import com.tobidaada.chatapp.ui.start.StartActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,6 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mToolbar: Toolbar
+    private lateinit var mViewPager: ViewPager
+    private lateinit var mMainViewPagerAdapter: MainViewPagerAdapter
+    private lateinit var mTabLayout: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,9 +29,19 @@ class MainActivity : AppCompatActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         mToolbar = main_toolbar as Toolbar
+        mViewPager = main_viewPager
+        mTabLayout = main_tab
 
         setSupportActionBar(mToolbar)
         supportActionBar?.title = "ChatApp"
+
+        mMainViewPagerAdapter = MainViewPagerAdapter(supportFragmentManager)
+        mMainViewPagerAdapter.addFragment(RequestFragment(), "Requests")
+        mMainViewPagerAdapter.addFragment(ChatsFragment(), "Chats")
+        mMainViewPagerAdapter.addFragment(FriendsFragment(), "Friends")
+
+        mViewPager.adapter = mMainViewPagerAdapter
+        mTabLayout.setupWithViewPager(mViewPager)
     }
 
     override fun onStart() {

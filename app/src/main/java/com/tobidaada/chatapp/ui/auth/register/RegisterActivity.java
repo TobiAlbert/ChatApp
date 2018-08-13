@@ -82,7 +82,9 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             mProgressDialog.dismiss();
                             // Sign in success, update UI with the signed-in user's information
-                            startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user
