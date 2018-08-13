@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "948320282045",
+    "firebase_url": "https://chatapp-33606.firebaseio.com",
+    "project_id": "chatapp-33606",
+    "storage_bucket": "chatapp-33606.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:948320282045:android:dc9fc05a63fe88c4",
+        "android_client_info": {
+          "package_name": "com.tobidaada.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "948320282045-55us31hsq5ne6osbh0v8hadm6cru7d8f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDaxtl0rdXIM_Wr30sbbEVXWUzdvUtLyyU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
