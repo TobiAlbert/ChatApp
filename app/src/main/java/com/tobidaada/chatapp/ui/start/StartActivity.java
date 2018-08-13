@@ -7,24 +7,32 @@ import android.view.View;
 import android.widget.Button;
 
 import com.tobidaada.chatapp.R;
-import com.tobidaada.chatapp.ui.auth.RegisterActivity;
+import com.tobidaada.chatapp.ui.auth.login.LoginActivity;
+import com.tobidaada.chatapp.ui.auth.register.RegisterActivity;
 
 public class StartActivity extends AppCompatActivity {
-
-    private Button mRegisterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        mRegisterButton = findViewById(R.id.start_register_btn);
-        mRegisterButton.setOnClickListener(new View.OnClickListener() {
+        Button registerButton = findViewById(R.id.start_register_btn);
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(StartActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(StartActivity.this, RegisterActivity.class));
             }
         });
+
+        Button loginButton = findViewById(R.id.start_login_btn);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(StartActivity.this, LoginActivity.class));
+            }
+        });
+
+
     }
 }
