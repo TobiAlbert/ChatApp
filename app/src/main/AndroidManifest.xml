@@ -21,11 +21,11 @@
         <activity android:name=".ui.start.StartActivity" />
         <activity
             android:name=".ui.auth.register.RegisterActivity"
-            android:parentActivityName=".ui.start.StartActivity"/>
-
+            android:parentActivityName=".ui.start.StartActivity" />
         <activity
             android:name=".ui.auth.login.LoginActivity"
-            android:parentActivityName=".ui.start.StartActivity"/>
+            android:parentActivityName=".ui.start.StartActivity" />
+        <activity android:name=".ui.settings.SettingsActivity"></activity>
     </application>
 
 </manifest>
