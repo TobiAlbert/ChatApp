@@ -2,10 +2,10 @@ package com.tobidaada.chatapp.ui.auth.register;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -17,8 +17,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.tobidaada.chatapp.R;
 import com.tobidaada.chatapp.ui.main.MainActivity;
+
+import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -29,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Toolbar mToolbar;
     private ProgressDialog mProgressDialog;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,18 +80,41 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void registerUser(String displayName, String email, String password) {
+    private void registerUser(final String displayName, String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            mProgressDialog.dismiss();
-                            // Sign in success, update UI with the signed-in user's information
-                            Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            finish();
+
+                            FirebaseUser currentUser = mAuth.getCurrentUser();
+                            String uniqueUserId = currentUser.getUid();
+
+                            mDatabase = FirebaseDatabase.getInstance().getReference()
+                                    .child("Users")
+                                    .child(uniqueUserId);
+
+                            HashMap<String, String> userMap = new HashMap<>();
+                            userMap.put("name", displayName);
+                            userMap.put("status", "Hi there, I'm using Chat App");
+                            userMap.put("image", "default");
+                            userMap.put("thumb_image", "default");
+
+                            mDatabase.setValue(userMap).addOnCompleteListener( new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if (task.isSuccessful()) {
+                                        mProgressDialog.dismiss();
+                                        // Sign in success, update UI with the signed-in user's information
+                                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                        startActivity(intent);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        finish();
+                                    }
+                                }
+                            });
+
                         } else {
                             // If sign in fails, display a message to the user
                             Log.i("ChatApp", "Task Result: " + task.getResult().toString());
