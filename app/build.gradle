@@ -47,6 +47,9 @@ dependencies {
     // Firebase Database
     implementation "com.google.firebase:firebase-database:16.0.1"
 
+    // Circle Image Library
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+
 }
 
 // Firebase
