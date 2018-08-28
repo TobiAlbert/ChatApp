@@ -13,4 +13,9 @@
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 
+    <style name="AppTextStyleHeader" parent="AppTextStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
+
 </resources>
