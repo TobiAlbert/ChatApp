@@ -10,9 +10,11 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.tobidaada.chatapp.R
+import com.tobidaada.chatapp.R.id.*
 import com.tobidaada.chatapp.adapters.MainViewPagerAdapter
 import com.tobidaada.chatapp.ui.settings.SettingsActivity
 import com.tobidaada.chatapp.ui.start.StartActivity
+import com.tobidaada.chatapp.ui.user.UsersActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -89,7 +91,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun getAllUsers() {}
+    private fun getAllUsers() {
+        startActivity(Intent(this@MainActivity, UsersActivity::class.java))
+    }
 
     private fun sendToSettingsActivity() {
         val intent = Intent( this@MainActivity, SettingsActivity::class.java)
