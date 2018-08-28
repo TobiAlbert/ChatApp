@@ -119,7 +119,7 @@ class SettingsActivity : AppCompatActivity() {
 
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
-                val imageName = NumberUtils.generateRandomNumber()
+                val imageName = mCurrentUser.uid
                 Log.i(TAG, "image name: $imageName")
                 val filePath = mStorageReference.child("profile_images").child("$imageName.jpg")
 
