@@ -4,9 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -14,10 +15,10 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.theartofdev.edmodo.cropper.CropImage
 import com.tobidaada.chatapp.R
-import com.tobidaada.chatapp.R.id.*
 import com.tobidaada.chatapp.ui.status.StatusActivity
-import com.tobidaada.chatapp.utils.NumberUtils
+import com.tobidaada.chatapp.utils.gone
 import com.tobidaada.chatapp.utils.toast
+import com.tobidaada.chatapp.utils.visible
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -37,6 +38,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var mCircleImageView: CircleImageView
     private lateinit var mChangeStatusButton: Button
     private lateinit var mChangeImageButton: Button
+    private lateinit var mProgressBar: ProgressBar
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +50,7 @@ class SettingsActivity : AppCompatActivity() {
         mCircleImageView = settings_image
         mChangeStatusButton = settings_change_status_btn
         mChangeImageButton = settings_change_image_btn
+        mProgressBar = settings_progressbar
 
         mChangeImageButton.setOnClickListener { onChangeImageButtonClicked() }
         mChangeStatusButton.setOnClickListener { onChangeStatusSelected() }
@@ -74,6 +77,10 @@ class SettingsActivity : AppCompatActivity() {
 
                 mNameTextView.text = name
                 mStatusTextView.text = status
+
+                Glide.with(this@SettingsActivity)
+                        .load(image)
+                        .into(settings_image)
 
 
             }
@@ -120,17 +127,36 @@ class SettingsActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
                 val imageName = mCurrentUser.uid
-                Log.i(TAG, "image name: $imageName")
                 val filePath = mStorageReference.child("profile_images").child("$imageName.jpg")
+
+                mProgressBar.visible()
 
                 filePath.putFile(resultUri).addOnCompleteListener{
                     task ->
+                    mProgressBar.gone()
+
                     if (task.isSuccessful) {
-                        this@SettingsActivity.toast("Working")
+                        this@SettingsActivity.toast("Image Upload Successful")
+                        val downloadUrl = filePath.downloadUrl.toString()
+                        mUserDatabase.child("image").setValue(downloadUrl).addOnCompleteListener {
+
+
+                            getDownloadUrlTask ->
+                            if (!getDownloadUrlTask.isSuccessful) {
+                            }
+
+                            if (getDownloadUrlTask.isSuccessful) {
+
+                            }
+
+
+                        }
+
                     } else {
                         // TODO: Add Error handler
                     }
                 }
+
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val exception = result.error

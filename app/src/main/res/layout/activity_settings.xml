@@ -67,4 +67,11 @@
         android:textColor="@android:color/white"
         android:text="Change Status"/>
 
+    <ProgressBar
+        android:id="@+id/settings_progressbar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
 </RelativeLayout>
