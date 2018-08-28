@@ -17,6 +17,7 @@ class SettingsActivity : AppCompatActivity() {
 
     companion object {
         val TAG = SettingsActivity::class.java.simpleName
+        val SELECT_IMAGE = 1000
     }
 
     private lateinit var mUserDatabase: DatabaseReference
@@ -25,6 +26,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var mStatusTextView: TextView
     private lateinit var mCircleImageView: CircleImageView
     private lateinit var mChangeStatusButton: Button
+    private lateinit var mChangeImageButton: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +37,9 @@ class SettingsActivity : AppCompatActivity() {
         mStatusTextView = settings_status_tv
         mCircleImageView = settings_image
         mChangeStatusButton = settings_change_status_btn
+        mChangeImageButton = settings_change_image_btn
 
+        mChangeImageButton.setOnClickListener { onChangeImageButtonClicked() }
         mChangeStatusButton.setOnClickListener { onChangeStatusSelected() }
 
         mCurrentUser = FirebaseAuth.getInstance().currentUser!!
@@ -64,10 +69,25 @@ class SettingsActivity : AppCompatActivity() {
         })
     }
 
+    private fun onChangeImageButtonClicked() {
+        val galleryIntent = Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+
+        }
+
+        startActivityForResult(galleryIntent, SELECT_IMAGE)
+
+    }
+
     private fun onChangeStatusSelected() {
         val intent = Intent(this@SettingsActivity, StatusActivity::class.java).apply {
             putExtra("userStatus", mStatusTextView.text.toString())
         }
         startActivity(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 }
