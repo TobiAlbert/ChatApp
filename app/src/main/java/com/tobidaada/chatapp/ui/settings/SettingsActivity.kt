@@ -1,12 +1,15 @@
 package com.tobidaada.chatapp.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.Button
 import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.tobidaada.chatapp.R
+import com.tobidaada.chatapp.ui.status.StatusActivity
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_settings.*
 
@@ -21,6 +24,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var mNameTextView: TextView
     private lateinit var mStatusTextView: TextView
     private lateinit var mCircleImageView: CircleImageView
+    private lateinit var mChangeStatusButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +33,9 @@ class SettingsActivity : AppCompatActivity() {
         mNameTextView = settings_display_name_tv
         mStatusTextView = settings_status_tv
         mCircleImageView = settings_image
+        mChangeStatusButton = settings_change_status_btn
+
+        mChangeStatusButton.setOnClickListener { onChangeStatusSelected() }
 
         mCurrentUser = FirebaseAuth.getInstance().currentUser!!
 
@@ -55,5 +62,12 @@ class SettingsActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun onChangeStatusSelected() {
+        val intent = Intent(this@SettingsActivity, StatusActivity::class.java).apply {
+            putExtra("userStatus", mStatusTextView.text.toString())
+        }
+        startActivity(intent)
     }
 }
