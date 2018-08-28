@@ -1,20 +1,34 @@
 package com.tobidaada.chatapp.ui.settings
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.widget.TextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.tobidaada.chatapp.R
+import de.hdodenhof.circleimageview.CircleImageView
+import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 
+    companion object {
+        val TAG = SettingsActivity::class.java.simpleName
+    }
+
     private lateinit var mUserDatabase: DatabaseReference
     private lateinit var mCurrentUser: FirebaseUser
+    private lateinit var mNameTextView: TextView
+    private lateinit var mStatusTextView: TextView
+    private lateinit var mCircleImageView: CircleImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        mNameTextView = settings_display_name_tv
+        mStatusTextView = settings_status_tv
+        mCircleImageView = settings_image
 
         mCurrentUser = FirebaseAuth.getInstance().currentUser!!
 
@@ -27,8 +41,17 @@ class SettingsActivity : AppCompatActivity() {
                 // Happens when an error occurs during the data retrieval process
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // Happens when ever we retrieve data
+                val name = dataSnapshot.child("name").value.toString()
+                val image = dataSnapshot.child("image").value.toString()
+                val status = dataSnapshot.child("status").value.toString()
+                val thumb_image = dataSnapshot.child("thumb_image").value.toString()
+
+                mNameTextView.text = name
+                mStatusTextView.text = status
+
+
             }
 
         })
