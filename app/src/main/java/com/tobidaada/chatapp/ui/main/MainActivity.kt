@@ -11,6 +11,7 @@ import android.view.MenuItem
 import com.google.firebase.auth.FirebaseAuth
 import com.tobidaada.chatapp.R
 import com.tobidaada.chatapp.adapters.MainViewPagerAdapter
+import com.tobidaada.chatapp.ui.settings.SettingsActivity
 import com.tobidaada.chatapp.ui.start.StartActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         when (item?.itemId) {
             R.id.logout_menu -> logoutUser()
             R.id.all_users_menu -> getAllUsers()
-            R.id.account_settings_menu -> accountSettings()
+            R.id.account_settings_menu -> sendToSettingsActivity()
 
         }
 
@@ -90,5 +91,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getAllUsers() {}
 
-    private fun accountSettings() {}
+    private fun sendToSettingsActivity() {
+        val intent = Intent( this@MainActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
 }
