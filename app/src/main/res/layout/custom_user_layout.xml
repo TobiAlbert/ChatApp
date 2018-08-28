@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_marginRight="8dp"
+        android:id="@+id/users_image_view"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        tools:src="@drawable/ic_user"/>
+
+    <TextView
+        android:id="@+id/users_username_tv"
+        android:layout_toEndOf="@id/users_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/AppTextStyleHeader"
+        tools:text="Display Name"/>
+
+    <TextView
+        style="@style/AppTextStyle"
+        android:id="@+id/users_status_tv"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/users_username_tv"
+        android:layout_alignStart="@id/users_username_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Online"/>
+
+</RelativeLayout>
