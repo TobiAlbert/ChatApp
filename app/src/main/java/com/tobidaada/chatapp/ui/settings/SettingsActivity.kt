@@ -25,7 +25,6 @@ import kotlinx.android.synthetic.main.activity_settings.*
 class SettingsActivity : AppCompatActivity() {
 
     companion object {
-        val TAG = SettingsActivity::class.java.simpleName
         val SELECT_IMAGE = 1000
     }
 
@@ -81,8 +80,6 @@ class SettingsActivity : AppCompatActivity() {
                 Glide.with(this@SettingsActivity)
                         .load(image)
                         .into(settings_image)
-
-
             }
 
         })
@@ -129,33 +126,32 @@ class SettingsActivity : AppCompatActivity() {
                 val imageName = mCurrentUser.uid
                 val filePath = mStorageReference.child("profile_images").child("$imageName.jpg")
 
+                val uploadTask = filePath.putFile(resultUri)
+
                 mProgressBar.visible()
 
-                filePath.putFile(resultUri).addOnCompleteListener{
-                    task ->
-                    mProgressBar.gone()
-
-                    if (task.isSuccessful) {
-                        this@SettingsActivity.toast("Image Upload Successful")
-                        val downloadUrl = filePath.downloadUrl.toString()
-                        mUserDatabase.child("image").setValue(downloadUrl).addOnCompleteListener {
-
-
-                            getDownloadUrlTask ->
-                            if (!getDownloadUrlTask.isSuccessful) {
+                uploadTask
+                        .continueWithTask {
+                            task ->
+                            if (!task.isSuccessful) {
+                                // Something went wrong
                             }
 
-                            if (getDownloadUrlTask.isSuccessful) {
-
-                            }
-
-
+                            filePath.downloadUrl
                         }
+                        .addOnCompleteListener {
+                            task ->
+                            mProgressBar.gone()
 
-                    } else {
-                        // TODO: Add Error handler
-                    }
-                }
+                            if (task.isSuccessful) {
+                                this@SettingsActivity.toast("Image Upload Successful")
+                                val downloadUrl = task.result.toString()
+                                mUserDatabase.child("image").setValue(downloadUrl)
+
+                            } else {
+                                // TODO: Add Error handler
+                            }
+                        }
 
 
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
