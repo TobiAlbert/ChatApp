@@ -24,7 +24,7 @@
     <TextView
         style="@style/AppTextStyle"
         android:id="@+id/users_status_tv"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_below="@id/users_username_tv"
         android:layout_alignStart="@id/users_username_tv"
         android:layout_width="match_parent"
