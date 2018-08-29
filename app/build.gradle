@@ -13,6 +13,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -48,7 +49,7 @@ dependencies {
     implementation "com.google.firebase:firebase-messaging:17.1.0"
 
     // FirebaseUI for Firebase Realtime Database
-    implementation 'com.firebaseui:firebase-ui-database:4.1.0'
+    implementation 'com.firebaseui:firebase-ui-database:3.3.1'
 
     // Firebase Storage Reference
     implementation 'com.google.firebase:firebase-storage:16.0.1'
