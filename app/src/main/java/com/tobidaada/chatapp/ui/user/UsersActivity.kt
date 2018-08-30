@@ -1,5 +1,6 @@
 package com.tobidaada.chatapp.ui.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -15,7 +16,10 @@ import com.firebase.ui.database.FirebaseRecyclerOptions
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.tobidaada.chatapp.R
+import com.tobidaada.chatapp.R.id.users_activity_appbar
+import com.tobidaada.chatapp.R.id.users_recycler_view
 import com.tobidaada.chatapp.data.datamodel.Users
+import com.tobidaada.chatapp.ui.user_profile.ProfileActivity
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_users.*
 
@@ -72,11 +76,21 @@ class UsersActivity : AppCompatActivity() {
 
                 holder.mUserNameTextView.text = model.name
                 holder.mUsersStatusTextView.text = model.status
+
+                holder.itemView.setOnClickListener { onUserProfileClicked(getRef(position).key) }
             }
         }
         mAdapter.startListening()
         mRecyclerView.adapter = mAdapter
 
+    }
+
+    private fun onUserProfileClicked(userId: String) {
+        val intent = Intent(this@UsersActivity, ProfileActivity::class.java)
+        intent.apply {
+            putExtra("userId", userId)
+        }
+        startActivity(intent)
     }
 
     override fun onStop() {

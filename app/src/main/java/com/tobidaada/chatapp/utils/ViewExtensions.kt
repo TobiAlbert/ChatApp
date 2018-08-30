@@ -22,4 +22,15 @@ fun View.disable() {
     this.isEnabled = false
 }
 
+fun disableViews(views: Array<View>) {
+    for (view in views) {
+        view.disable()
+    }
+}
+
+fun enableViews(views: Array<View>) {
+    for (view in views) {
+        view.enable()
+    }
+}
 
