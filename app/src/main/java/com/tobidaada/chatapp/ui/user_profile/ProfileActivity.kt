@@ -1,8 +1,7 @@
 package com.tobidaada.chatapp.ui.user_profile
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
+import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
